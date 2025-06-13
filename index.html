@@ -1,0 +1,41 @@
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Католог товаров</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <header>
+        <h1>Католог товаров</h1>
+    </header>
+    <main>
+        <aside>
+            <h2>Фильтры</h2>
+            <div class="filter-section">
+                <h3>Категории</h3>
+                <div id="category-filters"></div>
+            </div>
+            <div class="filter-section">
+                <h3>Ценовой диапазон</h3>
+                <input type="range" id="price-range" min="0" max="3000" step="10">
+                <div id="price-range-value">0 - 3000</div>
+            </div>
+        </aside>
+        <section class="products">
+            <div class="sorting-options">
+                <label for="sort-by">Сортировать по:</label>
+                <select id="sort-by">
+                    <option value="name">Названию</option>
+                    <option value="price">Цене</option>
+                    <option value="rating">Рейтингу</option>
+                </select>
+            </div>
+            <div class="product-grid" id="product-grid"></div>
+        </section>
+    </main>
+    <footer>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
