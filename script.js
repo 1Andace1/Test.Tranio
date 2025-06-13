@@ -26,10 +26,20 @@ document.addEventListener('DOMContentLoaded', function() {
         ).join('');
     }
 
+    function getImageSource(product) {
+        if (window.matchMedia("(max-width: 480px)").matches) {
+            return product.image.mobile;
+        } else if (window.matchMedia("(max-width: 768px)").matches) {
+            return product.image.tablet;
+        } else {
+            return product.image.desktop; 
+        }
+    }
+
     function displayProducts(products) {
         productGrid.innerHTML = products.map(product => `
             <div class="product-card">
-                <img data-src="${product.image.desktop}" alt="${product.name}" class="lazy-load">
+                <img data-src="${getImageSource(product)}" alt="${product.name}" class="lazy-load">
                 <h3>${product.name}</h3>
                 <p>${product.description}</p>
                 <p>Цена: $${product.price}</p>
@@ -54,13 +64,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function filterAndSortProducts() {
         const selectedCategories = Array.from(document.querySelectorAll('#category-filters input[type="checkbox"]:checked')).map(input => input.value);
-        const minPrice = parseInt(priceRange.min);
-        const maxPrice = parseInt(priceRange.max);
-        const currentPrice = parseInt(priceRange.value);
+        const maxPrice = parseInt(priceRange.value);
 
         let filteredProducts = products.filter(product =>
             (selectedCategories.length === 0 || selectedCategories.includes(product.category)) &&
-            product.price >= minPrice && product.price <= currentPrice
+            product.price <= maxPrice
         );
 
         filteredProducts.sort((a, b) => {
@@ -72,10 +80,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         displayProducts(filteredProducts);
     }
-    
+
     categoryFilters.addEventListener('change', filterAndSortProducts);
     priceRange.addEventListener('input', function() {
-        priceRangeValue.textContent = `${priceRange.value}`;
+        priceRangeValue.textContent = `0 - ${priceRange.value}`;
         filterAndSortProducts();
     });
     sortBy.addEventListener('change', filterAndSortProducts);
